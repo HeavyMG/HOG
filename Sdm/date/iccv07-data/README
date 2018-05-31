@@ -1,0 +1,72 @@
+Coupled Detection and Trajectory Estimation
+===========================================
+
+Konrad Schindler, 29/07/2009
+
+
+
+General
+-------
+
+This file contains data, annotations, and results from the paper
+
+Coupled Detection and Trajectory Estimation for Multi-Object Tracking.
+B. Leibe, K. Schindler, and L. van Gool.
+IEEE International Conference on Computer Vision (ICCV), 2007.
+
+If you use this data, please cite the above-mentioned paper as source.
+
+Each sequence comes with ground-truth bounding box annotations for all
+visible pedestrians, as well as a camera calibration. The annotation
+files contain bounding box annotations for every fourth frame.
+
+
+Calibration
+-----------
+
+Each image archive comes with a subdirectory "maps" containing a
+calibration file "camera.default". The calibration files has the
+entries
+
+K [3x3] ... internal calibration
+rad [1x3] ... radial distortion coefficients
+R [3x3] ... external calibration, rotation
+t [1x3] ... external calibration, translation
+GP[1x4] ... ground plane
+
+R and t are the external calibration mapping world->camera, i.e.
+X_cam = R X_world + t
+
+GP are the ground plane coordinates in the form
+
+GP(1:3) x - GP(4)=0
+
+The Matlab function read_camera.m demonstrates how to read in the
+camera parameters.
+
+Please note that we have rescaled all images to twice their original
+size for object detection. The calibration files still refer to the
+original size. Therefore, all image coordinates need to be divided by
+2 prior to applying the calibration. The world scale is already
+expressed in meters.
+
+
+Annotations
+-----------
+
+IDL files are used for storing the annotations of the sequence. For
+each image, the file format lists a set of bounding boxes, separated
+by commas. The boxes contain upper-left and lower-right corner, but
+are not necessarily sorted according to this. A semicolon ends the
+list of bounding boxes for a single file, a period ends the file.
+
+"filename": (x1, y1, x2, y2), (x1, y1, x2, y2), ...;
+
+A simple Matlab reader for the IDL format is provided.
+
+
+Acknowledgments
+---------------
+
+We are most grateful to Martin Vogt for annotating such a large amount
+of data.
